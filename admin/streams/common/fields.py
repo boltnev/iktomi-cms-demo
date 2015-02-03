@@ -285,12 +285,24 @@ def CommonFieldBlock(*args, **kwargs):
     return FieldBlock(*args, **kwargs)
 
 
+BaseAjaxImageField = AjaxImageField
+
+class AjaxImageField(BaseAjaxImageField):
+
+    require_upload_handler = True
+
+    @property
+    def upload_url(self):
+        url = BaseAjaxImageField.upload_url.fget(self)
+        assert not self.require_upload_handler or\
+                str(url) != str(self.env.root.load_tmp_file), \
+                "define StreamImageUploadHandler"
+        return url
+
+
 class LowResImageField(AjaxImageField):
 
     show_thumbnail = False
     crop = False
     conv = AjaxImageField.conv(autocrop=True)
     widget = AjaxImageField.widget(classname="no-upload")
-
-    def accept(self):
-        return AjaxImageField.accept(self)

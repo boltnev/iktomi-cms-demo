@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from iktomi.cms.ajax_file_upload import FileUploadHandler
+from iktomi.cms.ajax_file_upload import FileUploadHandler, StreamImageUploadHandler
 
 from models.admin import EditorNote, Tray, ObjectTray, AdminUser
 from menuconf import dashboard
@@ -20,7 +20,7 @@ __all__ = ['index', 'packer',
 index = IndexHandler(dashboard)
 index.func_name = 'index' # XXX
 
-load_tmp_image = FileUploadHandler()
+load_tmp_image = StreamImageUploadHandler()
 load_tmp_file = FileUploadHandler()
 publish_queue = PublishQueue(streams)
 

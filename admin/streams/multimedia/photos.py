@@ -51,8 +51,6 @@ def ItemForm(models):
             TitleField('title', label=u'Подпись'),
         ], open_with_data=True),
 
-
-
         CommonFieldBlock(u'', fields=[
             SourceField(
                 'source',
@@ -67,10 +65,13 @@ def ItemForm(models):
                 required=True,
                 show_thumbnail=False,
                 show_size=False,
-                label = u'Фото в исходном разрешении'),
+                label = u'Фото в исходном разрешении',
+                widget=AjaxImageField.widget(allow_upload=True),
+            ),
             AjaxImageField(
                 'image_big',
-                widget=AjaxImageField.widget(classname="no-upload"),
+                widget=AjaxImageField.widget(classname="no-upload",
+                                             show_image=True),
                 label=u'Большой размер'),
             LowResImageField(
                 'image_medium',
@@ -81,7 +82,7 @@ def ItemForm(models):
 
             AjaxImageField(
                 'image_small',
-                widget=AjaxImageField.widget(classname="no-upload"),
+                widget=AjaxImageField.widget(classname="no-upload", show_image=True),
                 label=u'Квадратная обрезка'),
         ])
     )
