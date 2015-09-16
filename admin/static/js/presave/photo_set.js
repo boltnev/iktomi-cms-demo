@@ -1,46 +1,35 @@
 var CheckPhotoOrder = new Class({
-  Extends: PreSaveHook,
+    Extends: PreSaveHook,
 
-  confirm_text: 'Вы проверили сортировку фотографий?',
+    confirm_text: 'Вы проверили сортировку фотографий?',
 
-  get_widget: function(){
-    return $(this.frm.id).retrieve('widget');
-  },
+    get_widget: function(){
+        return $(this.frm.id  + '.photos_edit').retrieve('widget');
+    },
 
-  confirm_rule: function(){
-    this.widget.addEvent('change', function(){
-      this.require_check = false;
+    get_require_check: function(){
+        var order = JSON.stringify(this.widget.state.value);
+        var count = this.widget.state.value.length;
+        return count > 1 && order != this.init_order;
+    },
 
-      var length = 0;
-      this.widget._selected_items.each(function(el){
-        if(el){
-          length++;
-        }
-      });
-
-      if(length > 1) {
-        this.require_check = true;
-      }
-    }.bind(this))
-  }
+    after_init: function(){
+        this.init_order = JSON.stringify(this.widget.state.value);
+    }
 });
 
 var CheckMainPhoto = new Class({
-  Extends: PreSaveHook,
+    Extends: PreSaveHook,
 
-  confirm_text: 'Вы выбрали главную фотографию?',
+    confirm_text: 'Вы выбрали главную фотографию?',
 
-  get_widget: function(){
-    return $(this.frm.id + '-photos_edit').retrieve('widget');
-  },
+    get_widget: function(){
+        return $(this.frm.id + '.photos_edit').retrieve('widget');
+    },
 
-  confirm_rule: function(){
-    this.widget.addEvent('change', function(){
-      this.require_check = true;
-    }.bind(this));
+    get_require_check: function(){
+        var count = this.widget.state.value.length;
+        return count > 1;
+    },
 
-    this.widget.addEvent('select_main', function(){
-      this.require_check = false;
-    })
-  }
 });
