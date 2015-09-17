@@ -47,7 +47,10 @@ def ItemForm(models):
               widget=widgets.PopupStreamSelect(
                   stream_name='multimedia.photos',
                   template="widgets/popup_stream_select_photos",
-                  allow_create=True),
+                  allow_create=True,
+                  allow_select_main=True,
+                  main_field_name='index_photo',
+              ),
               label=u'Фотографии'),
 
         Field('index_photo',

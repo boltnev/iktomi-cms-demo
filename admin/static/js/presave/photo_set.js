@@ -29,7 +29,8 @@ var CheckMainPhoto = new Class({
 
     get_require_check: function(){
         var count = this.widget.state.value.length;
-        return count > 1;
+        var mainPhoto = this.widget.getMainWidget().state.value.text;
+        return count > 1 && mainPhoto == '';
     },
 
 });
